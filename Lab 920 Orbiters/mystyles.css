@@ -1,0 +1,23 @@
+body {
+  background-color: #2d065056;
+  margin: 2;
+}
+
+#wrapperDiv {
+  height: 600px;
+  width: 800px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.tile {
+  float: left;
+  padding: 20px;
+  width: 45px;
+  height: 35px;
+  margin-left: 80px;
+  margin-top: 10px;
+  background-color: #18b7db;
+  border-radius: 100%;
+  border: solid rgb(195, 17, 17) 2px;
+}
