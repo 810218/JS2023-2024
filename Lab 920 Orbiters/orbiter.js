@@ -1,6 +1,3 @@
-
-
-
 function Orbiter(parent, radius, angle, angVel) { //class of orbiters to rotate around each Bubble
     this.parent = parent;
     this.parentLoc = new JSVector(this.parent.loc.x, this.parent.loc.y);
