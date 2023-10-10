@@ -13,7 +13,7 @@ ParticleSystem.prototype.run = function () {
 ParticleSystem.prototype.loadParticles = function () {
     for (let i = 0; i < this.numParticles; i++) {
         let xVel = Math.random(5);
-        let yVel = -1 * (Math.random(5) + 10);
+        let yVel = -1 * (Math.random(10) + 10);
         this.particles.push(new Particle(this.loc.x, this.loc.y, xVel, yVel, 10));
     }
 }
