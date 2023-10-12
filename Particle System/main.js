@@ -36,12 +36,12 @@ function spliceParticleSystems() {
             //i--;
         }
     }
-    // for (let i = 0; i < particleSystems.length; i++) {
-    //     if (particleSystems[i].particles.length === 0) {
-    //         particleSystems.splice(i, 0);
-    //         i--;
-    //     }
-    // }
+    for (let i = 0; i < particleSystems.length; i++) {
+        if (particleSystems[i].particles.length === 0) {
+            particleSystems.splice(i, 1);
+            i--;
+        }
+    }
 }
 
 
