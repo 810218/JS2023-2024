@@ -30,7 +30,7 @@ function runParticleSystems() {
 
 window.addEventListener("click", attRep);
 function attRep(e) {//you need to pass in a variable into whatever function you are calling in the mouse click listener
-    particleSystems.push(new ParticleSystem(e.screenX - 50, e.screenY - 50));// and then use that variable to use screenX and screenY
+    particleSystems.push(new ParticleSystem(e.screenX - 300, e.screenY - 50));// and then use that variable to use screenX and screenY
 }
 
 
