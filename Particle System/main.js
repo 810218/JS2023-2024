@@ -45,6 +45,8 @@ function spliceParticleSystems() {
 }
 
 
+
+
 window.addEventListener("click", attRep);
 function attRep(e) {//you need to pass in a variable into whatever function you are calling in the mouse click listener
     particleSystems.push(new ParticleSystem(e.offsetX, e.offsetY));// and then use that variable to use screenX and screenY

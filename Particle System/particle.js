@@ -11,6 +11,7 @@ function Particle(x, y, initialXVelocity, initialYVelocity, colorIndex) {
 Particle.prototype.run = function () {
     this.render();
     this.update();
+    this.checkEdges();
     this.opacity -= 0.008;
 }
 
@@ -73,7 +74,31 @@ Particle.prototype.render = function () {
     }
 
 
+
 }
+
+
+Particle.prototype.checkEdges = function () {
+    if (this.loc.x > canvas.width) {
+        this.loc.x = canvas.width - 1;
+        this.vel.x = -1 * this.vel.x;
+    }
+    if (this.loc.x < 2) {
+        this.loc.x = 1;
+        this.vel.x = -1 * this.vel.x;
+    }
+    if (this.loc.y > canvas.height) {
+        this.loc.y = canvas.height - 1;
+        this.vel.y = -1 * this.vel.y;
+    }
+    if (this.loc.y < 2) {
+        this.loc.y = 1;
+        this.vel.y = -1 * this.vel.y;
+    }
+}
+
+
+
 Particle.prototype.update = function () {
     this.loc.add(this.vel);
     this.vel.add(this.acc);
