@@ -44,6 +44,11 @@ function spliceParticleSystems() {
     }
 }
 
+function checkParticleOverlap(systemID) {
+    for (let i = 0; i < particleSystems[systemID].length; i++) {
+
+    }
+}
 
 
 
