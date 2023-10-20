@@ -1,7 +1,9 @@
 function Ship(x, y) {
     this.loc = new JSVector(x, y);
     this.disp = 30;
-    this.vel = new JSVector(3, 3);
+    let dx = Math.random() * (5 + 5 + 1) - 5;
+    let dy = Math.random() * (5 + 5 + 1) - 5;
+    this.vel = new JSVector(dx, dy);
     this.acc = new JSVector(0, 0);
 }
 
@@ -11,24 +13,36 @@ Ship.prototype.run = function () {
 }
 
 Ship.prototype.render = function () {
-    let clr = "rgba(16,100,255,0.83";
+    let rotateAngle = this.vel.getDirection();
+    context.save();
+    context.translate(this.loc.x, this.loc.y);
+    context.rotate(rotateAngle);
     context.beginPath();
-    context.strokeStyle = clr;
-    context.fillStyle = clr;
-    context.moveTo(this.loc.x, this.loc.y - this.disp);
-    context.lineTo(this.loc - this.disp, this.loc.y + this.disp);
-    context.lineTo(this.loc.x, this.loc.y);
-    context.lineTo(this.loc.x + this.disp, this.loc.x - this.disp);
-    context.stroke();
+    context.moveTo(20, 0);
+    context.lineTo(-10, 10);
+    context.lineTo(-1, 0);
+    context.lineTo(-10, -10);
+    context.closePath();
+    context.fillStyle = "rgba(170, 72, 57, 1)";
+    context.strokeStyle = "rgba(170, 114, 57, 1)";
     context.fill();
-    //context.endPath();
+    context.stroke();
+    context.restore();
 }
 
 Ship.prototype.update = function () {
     this.acc = JSVector.subGetNew(planet.loc, this.loc);
     this.acc.normalize();
-    this.acc.multiply(0.05);
-    this.vel = JSVector.addGetNew(this.vel, this.acc);
-    this.vel.limit(3);
-    this.loc = JSVector.addGetNew(this.loc, this.vel);
+    this.acc.multiply(0.2);
+    this.vel.limit(1);
+    this.vel.add(this.acc);
+    this.loc.add(this.vel);
 }
+
+
+
+
+
+
+
+

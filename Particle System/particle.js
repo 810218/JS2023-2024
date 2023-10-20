@@ -17,12 +17,27 @@ Particle.prototype.run = function () {
 
 Particle.prototype.render = function () {
     if (this.color === 0) {//red
-        context.strokeStyle = "rgba(255, 19, 0, " + this.opacity + ")";
-        context.fillStyle = "rgba(255, 19, 0, " + this.opacity + ")";
+        // context.strokeStyle = "rgba(255, 19, 0, " + this.opacity + ")";
+        // context.fillStyle = "rgba(255, 19, 0, " + this.opacity + ")";
+        // context.beginPath();
+        // context.arc(this.loc.x, this.loc.y, 8, Math.PI * 2, 0, false);
+        // context.stroke();
+        // context.fill();
+        let rotateAngle = this.vel.getDirection();
+        context.save();
+        context.translate(this.loc.x, this.loc.y);
+        context.rotate(rotateAngle);
         context.beginPath();
-        context.arc(this.loc.x, this.loc.y, 8, Math.PI * 2, 0, false);
-        context.stroke();
+        context.moveTo(20, 0);
+        context.lineTo(-10, 10);
+        context.lineTo(-1, 0);
+        context.lineTo(-10, -10);
+        context.closePath();
+        context.fillStyle = "rgba(170, 72, 57, 1)";
+        context.strokeStyle = "rgba(170, 114, 57, 1)";
         context.fill();
+        context.stroke();
+        context.restore();
     }
     else if (this.color === 1) {//orange
         context.strokeStyle = "rgba(255, 142, 0, " + this.opacity + ")";
@@ -72,9 +87,6 @@ Particle.prototype.render = function () {
         context.stroke();
         context.fill();
     }
-
-
-
 }
 
 
@@ -102,4 +114,5 @@ Particle.prototype.checkEdges = function () {
 Particle.prototype.update = function () {
     this.loc.add(this.vel);
     this.vel.add(this.acc);
+    // this.vel.limit(5);
 }
