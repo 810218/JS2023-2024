@@ -2,6 +2,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++
 window.addEventListener("load", init);
 
+//test edit for github
+
 let canvas, context;
 //+++++++++++++++++++++++++++++++++++++++++++
 let food = [];
