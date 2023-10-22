@@ -2,6 +2,8 @@
 // wait for the page to finish loading with init as the callback
 window.addEventListener("load", init);
 
+//test
+
 // global variables
 let canvas, context;
 let ship1;
