@@ -2,7 +2,6 @@
 //+++++++++++++++++++++++++++++++++++++++++++
 window.addEventListener("load", init);
 
-//you can actually edit code on Github.com! Isn't that neat?
 
 let canvas, context;
 //+++++++++++++++++++++++++++++++++++++++++++
