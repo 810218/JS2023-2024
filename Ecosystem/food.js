@@ -1,6 +1,7 @@
 function Food(x, y) {
     this.loc = new JSVector(x, y);
-    this.radius = Math.random() * 10 + 5;
+    this.base = Math.random() * 2.5;
+    this.radius = this.base * this.base * this.base * this.base + 10;
 }
 
 

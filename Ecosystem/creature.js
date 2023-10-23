@@ -76,7 +76,7 @@ Creature.prototype.foodRank = function () {
 Creature.prototype.eat = function () {
     for (let i = 0; i < this.food.length; i++) {
         if (this.loc.distance(this.food[i].loc) < this.food[i].radius) {
-            this.scale += this.food[i].radius / 5;
+            this.scale += this.food[i].radius / 10;
             this.food.splice(i, 1);
             start = true;
         }
