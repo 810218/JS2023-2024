@@ -51,7 +51,7 @@ Creature.prototype.update = function () {
             this.acc = new JSVector(0, 0);
         }
     }
-    this.vel.limit(0.1);
+    this.vel.limit(1);
     this.vel.add(this.acc);
     this.loc.add(this.vel);
 }
