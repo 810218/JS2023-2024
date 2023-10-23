@@ -25,7 +25,7 @@ function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     run(food);
     creature.run();
-    loadFood(numFood);
+    loadFoodAgain(numFood);
     requestAnimationFrame(animate); // next cycle
 }
 
@@ -43,12 +43,12 @@ function run(array) {
     }
 }
 
-function loadFood(numFood) {
-    if (food.length = 0 && start) {
+function loadFoodAgain(numFood) {
+    if (food.length === 0 && start) {
         for (let i = 0; i < numFood; i++) {
             let x = Math.random() * (canvas.width - 20) + 10;
             let y = Math.random() * (canvas.height - 20) + 10;
-            array.push(new Food(x, y));
+            food.push(new Food(x, y));
         }
     }
 }
