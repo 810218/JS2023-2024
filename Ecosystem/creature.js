@@ -5,6 +5,7 @@ function Creature(x, y, foodArray) {
     this.food = foodArray;
     let foragingMode = "largest";
     let foragingIndex = -1;
+    this.scale = 0;
 }
 
 Creature.prototype.run = function () {
@@ -26,6 +27,7 @@ Creature.prototype.render = function () {
     context.lineTo(0, 0);
     context.lineTo(-10, -10);
     context.closePath();
+    context.scale(this.scale, this.scale);
     context.fillStyle = "rgba(170, 72, 57, 1)";
     context.strokeStyle = "rgba(170, 114, 57, 1)";
     context.fill();
@@ -38,7 +40,7 @@ Creature.prototype.update = function () {
         if (this.foodRank() > -1) {
             this.acc = JSVector.subGetNew(this.food[this.foodRank()].loc, this.loc);
             this.acc.normalize();
-            this.acc.multiply(10);
+            this.acc.multiply(5);
         } else {
             this.acc = new JSVector(0, 0)
         }
@@ -46,7 +48,7 @@ Creature.prototype.update = function () {
         if (this.findClosest() > -1) {
             this.acc = JSVector.subGetNew(this.food[this.findClosest()].loc, this.loc);
             this.acc.normalize();
-            this.acc.multiply(10);
+            this.acc.multiply(5);
         } else {
             this.acc = new JSVector(0, 0);
         }
@@ -54,6 +56,9 @@ Creature.prototype.update = function () {
     this.vel.limit(1);
     this.vel.add(this.acc);
     this.loc.add(this.vel);
+    if (this.scale > 1) {
+        this.scale = this.scale / 1.005;
+    }
 }
 
 Creature.prototype.foodRank = function () {
@@ -72,6 +77,7 @@ Creature.prototype.eat = function () {
     for (let i = 0; i < this.food.length; i++) {
         if (this.loc.distance(this.food[i].loc) < this.food[i].radius) {
             console.log("test");
+            this.scale += this.food[i].radius / 5;
             this.food.splice(i, 1);
         }
     }
