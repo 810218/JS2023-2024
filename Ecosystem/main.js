@@ -11,7 +11,7 @@ let creature;
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
-    loadFood(5, food);
+    loadFood(20, food);
     creature = new Creature(200, 200, food);
     animate();
 

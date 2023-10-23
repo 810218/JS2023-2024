@@ -3,9 +3,12 @@ function Creature(x, y, foodArray) {
     this.vel = new JSVector(0, 0);
     this.acc = new JSVector(0, 0);
     this.food = foodArray;
+    let foragingMode = "largest";
+    let foragingIndex = -1;
 }
 
 Creature.prototype.run = function () {
+    this.foragingPriority();
     this.render();
     this.eat();
     this.update();
@@ -31,12 +34,24 @@ Creature.prototype.render = function () {
 }
 
 Creature.prototype.update = function () {
-    if (this.foodRank() > 0) {
-        this.acc = JSVector.subGetNew(this.food[this.foodRank()].loc, this.loc);
-        this.acc.normalize();
-        this.acc.multiply(0.5);
+    if (this.foragingMode === "largest") {
+        if (this.foodRank() > -1) {
+            this.acc = JSVector.subGetNew(this.food[this.foodRank()].loc, this.loc);
+            this.acc.normalize();
+            this.acc.multiply(10);
+        } else {
+            this.acc = new JSVector(0, 0)
+        }
+    } else if (this.foragingMode === "closest") {
+        if (this.findClosest() > -1) {
+            this.acc = JSVector.subGetNew(this.food[this.findClosest()].loc, this.loc);
+            this.acc.normalize();
+            this.acc.multiply(10);
+        } else {
+            this.acc = new JSVector(0, 0);
+        }
     }
-    this.vel.limit(1);
+    this.vel.limit(0.1);
     this.vel.add(this.acc);
     this.loc.add(this.vel);
 }
@@ -75,4 +90,25 @@ Creature.prototype.checkEdges = function () {
     if (this.loc.y > canvas.height - 5) {
         this.vel.y *= -1;
     }
+}
+
+Creature.prototype.foragingPriority = function () {
+    this.foragingMode = "largest"
+    for (let i = 0; i < this.food.length; i++) {
+        if (this.loc.distance(this.food[i].loc) < 50) {
+            this.foragingMode = "closest";
+        }
+    }
+}
+
+Creature.prototype.findClosest = function () {
+    let distance = 10000000;
+    let index = -1;
+    for (let i = 0; i < this.food.length; i++) {
+        if (this.loc.distance(this.food[i].loc) < distance) {
+            distance = this.loc.distance(this.food[i].loc);
+            index = i;
+        }
+    }
+    return index;
 }
