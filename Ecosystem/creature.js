@@ -9,8 +9,8 @@ function Creature(x, y, foodArray) {
 }
 
 Creature.prototype.run = function () {
-    this.foragingPriority();
     this.render();
+    this.foragingPriority();
     this.eat();
     this.update();
     this.checkEdges();
@@ -33,6 +33,15 @@ Creature.prototype.render = function () {
     context.fill();
     context.stroke();
     context.restore();
+
+    context.beginPath();
+    context.arc(this.loc.x, this.loc.y, 50, 0, 2 * Math.PI);
+    context.strokeStyle = "rgba(170, 114, 57, 1)";
+    context.fillStyle = "rgba(170, 114, 57, 0)";
+    context.fill();
+    context.stroke();
+    context.closePath();
+
 }
 
 Creature.prototype.update = function () {
@@ -40,7 +49,7 @@ Creature.prototype.update = function () {
         if (this.foodRank() > -1) {
             this.acc = JSVector.subGetNew(this.food[this.foodRank()].loc, this.loc);
             this.acc.normalize();
-            this.acc.multiply(5);
+            this.acc.multiply(0.1);
         } else {
             this.acc = new JSVector(0, 0)
         }
@@ -48,7 +57,7 @@ Creature.prototype.update = function () {
         if (this.findClosest() > -1) {
             this.acc = JSVector.subGetNew(this.food[this.findClosest()].loc, this.loc);
             this.acc.normalize();
-            this.acc.multiply(5);
+            this.acc.multiply(0.1);
         } else {
             this.acc = new JSVector(0, 0);
         }
