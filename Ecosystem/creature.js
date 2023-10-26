@@ -1,3 +1,5 @@
+
+
 function Creature(x, y, foodArray) {
     this.loc = new JSVector(x, y);
     this.vel = new JSVector(0, 0);
@@ -66,7 +68,7 @@ Creature.prototype.update = function () {
     this.vel.add(this.acc);
     this.loc.add(this.vel);
     if (this.scale > 1) {
-        this.scale = this.scale / 1.005;
+        this.scale = this.scale / 1.0001;
     }
 }
 
@@ -85,7 +87,7 @@ Creature.prototype.foodRank = function () {
 Creature.prototype.eat = function () {
     for (let i = 0; i < this.food.length; i++) {
         if (this.loc.distance(this.food[i].loc) < this.food[i].radius) {
-            this.scale += this.food[i].radius / 10;
+            this.scale += this.food[i].radius / 20;
             this.food.splice(i, 1);
             start = true;
         }

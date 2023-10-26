@@ -12,6 +12,21 @@ let creature;
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
+    cnvMain = document.getElementById('cnv1');
+    ctxMain = cnvMain.getContext('2d');
+    cnvMini = document.getElementById('cnv2');
+    ctxMini = cnvMini.getContext('2d');
+    //  vector to locate canvas in the world
+
+
+    dims = {
+        top: -1500,
+        left: -2000,
+        bottom: 1500,
+        right: 2000,
+        width: 4000,
+        height: 3000
+    }
     let start = false;
     numFood = 20;
     loadFood(numFood, food);
