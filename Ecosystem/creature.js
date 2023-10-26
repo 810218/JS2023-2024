@@ -20,29 +20,29 @@ Creature.prototype.run = function () {
 
 Creature.prototype.render = function () {
     let rotateAngle = this.vel.getDirection();
-    context.save();
-    context.translate(this.loc.x, this.loc.y);
-    context.rotate(rotateAngle);
-    context.beginPath();
-    context.moveTo(20, 0);
-    context.lineTo(-10, 10);
-    context.lineTo(0, 0);
-    context.lineTo(-10, -10);
-    context.closePath();
-    context.scale(this.scale, this.scale);
-    context.fillStyle = "rgba(170, 72, 57, 1)";
-    context.strokeStyle = "rgba(170, 114, 57, 1)";
-    context.fill();
-    context.stroke();
-    context.restore();
+    world.contextMain.save();
+    world.contextMain.translate(this.loc.x, this.loc.y);
+    world.contextMain.rotate(rotateAngle);
+    world.contextMain.beginPath();
+    world.contextMain.moveTo(20, 0);
+    world.contextMain.lineTo(-10, 10);
+    world.contextMain.lineTo(0, 0);
+    world.contextMain.lineTo(-10, -10);
+    world.contextMain.closePath();
+    world.contextMain.scale(this.scale, this.scale);
+    world.contextMain.fillStyle = "rgba(170, 72, 57, 1)";
+    world.contextMain.strokeStyle = "rgba(170, 114, 57, 1)";
+    world.contextMain.fill();
+    world.contextMain.stroke();
+    world.contextMain.restore();
 
-    context.beginPath();
-    context.arc(this.loc.x, this.loc.y, 50, 0, 2 * Math.PI);
-    context.strokeStyle = "rgba(170, 114, 57, 1)";
-    context.fillStyle = "rgba(170, 114, 57, 0)";
-    context.fill();
-    context.stroke();
-    context.closePath();
+    world.contextMain.beginPath();
+    world.contextMain.arc(this.loc.x, this.loc.y, 50, 0, 2 * Math.PI);
+    world.contextMain.strokeStyle = "rgba(170, 114, 57, 1)";
+    world.contextMain.fillStyle = "rgba(170, 114, 57, 0)";
+    world.contextMain.fill();
+    world.contextMain.stroke();
+    world.contextMain.closePath();
 
 }
 
@@ -68,14 +68,14 @@ Creature.prototype.update = function () {
     this.vel.add(this.acc);
     this.loc.add(this.vel);
     if (this.scale > 1) {
-        this.scale = this.scale / 1.0001;
+        this.scale = this.scale / 1.001;
     }
 }
 
 Creature.prototype.foodRank = function () {
     let maxSize = 0;
     maxIndex = -1;
-    for (let i = 0; i < food.length; i++) {
+    for (let i = 0; i < world.food.length; i++) {
         if (this.food[i].radius > maxSize) {
             maxSize = this.food[i].radius;
             maxIndex = i;
@@ -98,13 +98,13 @@ Creature.prototype.checkEdges = function () {
     if (this.loc.x < 5) {
         this.vel.x *= -1;
     }
-    if (this.loc.x > canvas.width - 5) {
+    if (this.loc.x > world.canvasMain.width - 5) {
         this.vel.x *= -1;
     }
     if (this.loc.y < 5) {
         this.vel.y *= -1;
     }
-    if (this.loc.y > canvas.height - 5) {
+    if (this.loc.y > world.canvasMain.height - 5) {
         this.vel.y *= -1;
     }
 }
