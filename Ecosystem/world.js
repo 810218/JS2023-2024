@@ -32,11 +32,11 @@ function World() {
                 break;
             case "KeyA":
                 if (world.canvasMainLoc.x + 100 > world.dims.left)
-                    world.canvasMainLoc.y -= 20;
+                    world.canvasMainLoc.x += 20;
                 break;
             case "KeyD":
                 if (world.canvasMainLoc.x + world.canvasMain.width - 100 < world.dims.right)
-                    world.canvasMainLoc.y += 20;
+                    world.canvasMainLoc.x -= 20;
                 break;
         }
     }, false);
