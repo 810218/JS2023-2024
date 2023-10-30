@@ -1,13 +1,10 @@
 function World() {
-    //Main canvas showing part of world 
     this.canvasMain = document.getElementById('cnv1');
     this.contextMain = this.canvasMain.getContext('2d');
-    //Mini canvas showing the whole world 
     this.canvasMini = document.getElementById('cnv2');
     this.contextMini = this.canvasMini.getContext('2d');
-    //move Canvas relative to the world 
+
     this.canvasMainLoc = new JSVector(0, 0);
-    //object holding limits of the whole world 
     this.dims = {
         top: -1500,
         left: -2000,
@@ -53,24 +50,71 @@ function World() {
 World.prototype.run = function () {
     //clear the canvas
     this.contextMain.clearRect(0, 0, this.canvasMain.width, this.canvasMain.height);
-
-
-
-    this.contextMain.save();
-    this.contextMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
     this.contextMini.clearRect(0, 0, this.canvasMini.width, this.canvasMini.height);
-    this.contextMini.save();
-    this.contextMain.scale(this.scaleX, this.scaleY);
-    this.contextMain.translate(this.contextMain.width, this.contextMain.height);
-    this.contextMini.restore();
-    this.contextMain.restore();
-    //+++    Draw the main and mini Canvas with bounds and axes
+
+
     this.contextMain.save();
+    this.contextMini.save();
     this.contextMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
+    this.contextMini.translate(this.contextMain.width, this.contextMain.height);
+
+    this.contextMain.beginPath(); //draws axis main
+    this.contextMain.moveTo(this.dims.left, 0);
+    this.contextMain.lineTo(this.dims.right, 0);
+    this.contextMain.closePath();
+    this.contextMain.lineWidth = 20;
+    this.contextMain.stroke();
+    this.contextMain.beginPath();
+    this.contextMain.moveTo(0, this.dims.top);
+    this.contextMain.lineTo(0, this.dims.bottom);
+    this.contextMain.closePath();
+    this.contextMain.lineWidth = 20;
+    this.contextMain.stroke();
+
+    this.contextMain.beginPath(); //draws border main
+    this.contextMain.moveTo(this.dims.left, this.dims.top);
+    this.contextMain.lineTo(this.dims.left, this.dims.bottom);
+    this.contextMain.lineTo(this.dims.right, this.dims.bottom);
+    this.contextMain.lineTo(this.dims.right, this.dims.top);
+    this.contextMain.closePath();
+    this.contextMain.lineWidth = 20;
+    this.contextMain.stroke();
+
+    // this.contextMini.clearRect(0, 0, this.canvasMini.width, this.canvasMini.height);
+    this.contextMini.scale(this.scaleX, this.scaleY);
 
     this.runArray(this.food);
     this.creature.run();
     this.loadFoodAgain(this.numFood);
+
+    this.contextMain.restore();
+
+    this.contextMini.beginPath(); //draws axis mini
+    this.contextMini.moveTo(this.dims.left, 0);
+    this.contextMini.lineTo(this.dims.right, 0);
+    this.contextMini.closePath();
+    this.contextMini.lineWidth = 20;
+    this.contextMini.stroke();
+    this.contextMini.beginPath();
+    this.contextMini.moveTo(0, this.dims.top);
+    this.contextMini.lineTo(0, this.dims.bottom);
+    this.contextMini.closePath();
+    this.contextMini.lineWidth = 20;
+    this.contextMini.stroke();
+
+    this.contextMini.beginPath(); //draws border mini
+    this.contextMini.moveTo(this.canvasMainLoc.x, this.canvasMainLoc.y);
+    this.contextMini.lineTo(this.canvasMainLoc.x, this.canvasMainLoc.y + this.canvasMainLoc.height);
+    this.contextMini.lineTo(this.canvasMainLoc.x + this.canvasMainLoc.width, this.canvasMainLoc.y + this.canvasMainLoc.height);
+    this.contextMini.lineTo(this.canvasMainLoc.x + this.canvasMainLoc.width, this.canvasMainLoc.y);
+    this.contextMini.closePath();
+    this.contextMini.lineWidth = 20;
+    this.contextMini.stroke();
+
+    this.contextMini.restore();
+    //+++    Draw the main and mini Canvas with bounds and axes
+    // this.contextMain.save();
+    // this.contextMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
 
 }
 

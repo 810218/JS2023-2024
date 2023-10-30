@@ -17,3 +17,5 @@ Food.prototype.render = function () {
     world.contextMain.fill();
     // context.stroke();
 }
+
+
