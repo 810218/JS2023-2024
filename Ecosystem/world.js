@@ -14,6 +14,11 @@ function World() {
         height: 3000
     }
 
+    this.numFood = 20;
+    this.food = [];
+    this.loadFood(this.numFood, this.food);
+    this.creature = new Creature(200, 200, this.food);
+
     this.scaleX = this.canvasMini.width / this.dims.width;
     this.scaleY = this.canvasMini.height / this.dims.height;
 
@@ -37,10 +42,7 @@ function World() {
                 break;
         }
     }, false);
-    this.numFood = 20;
-    this.food = [];
-    this.loadFood(this.numFood, this.food);
-    this.creature = new Creature(200, 200, this.food);
+
 }
 
 
