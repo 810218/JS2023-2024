@@ -14,7 +14,7 @@ function World() {
         height: 3000
     }
 
-    this.numFood = 20;
+    this.numFood = 200;
     this.food = [];
     this.loadFood(this.numFood, this.food);
     this.creature = new Creature(200, 200, this.food);
@@ -82,9 +82,11 @@ World.prototype.run = function () {
     // this.contextMini.clearRect(0, 0, this.canvasMini.width, this.canvasMini.height);
     this.contextMini.scale(this.scaleX, this.scaleY);
 
-    // this.runArray(this.food);
-    // this.creature.run();
-    // this.loadFoodAgain(this.numFood);
+    this.runArray(this.food);
+    this.loadFoodAgain(this.numFood);
+    this.creature.run();
+    world.contextMain.strokeStyle = "rgba(0,0,0)";
+    world.contextMain.fillStyle = "rgba(0,0,0)";
 
     this.contextMain.restore();
 
@@ -110,23 +112,19 @@ World.prototype.run = function () {
     this.contextMini.lineWidth = 20;
     this.contextMini.stroke();
 
-    this.runArray(this.food);
-    this.creature.run();
-    this.loadFoodAgain(this.numFood);
-    world.contextMain.strokeStyle = "rgba(0,0,0)";
-    world.contextMain.fillStyle = "rgba(0,0,0)";
-
+    // this.runArray(this.food);
+    // this.creature.run();
+    // this.loadFoodAgain(this.numFood);
+    // world.contextMain.strokeStyle = "rgba(0,0,0)";
+    // world.contextMain.fillStyle = "rgba(0,0,0)";
     this.contextMini.restore();
-    //+++    Draw the main and mini Canvas with bounds and axes
-    // this.contextMain.save();
-    // this.contextMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
 
 }
 
 World.prototype.loadFood = function (numFood, array) {
     for (let i = 0; i < this.numFood; i++) {
-        let x = Math.random() * (this.canvasMain.width - 20) + 10;
-        let y = Math.random() * (this.canvasMain.height - 20) + 10;
+        let x = Math.random() * this.dims.width - this.dims.width / 2;
+        let y = Math.random() * this.dims.height - this.dims.height / 2;
         array.push(new Food(x, y));
     }
 }

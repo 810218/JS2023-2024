@@ -15,7 +15,7 @@ Creature.prototype.run = function () {
     this.foragingPriority();
     this.eat();
     this.update();
-    this.checkEdges();
+    // this.checkEdges();
 }
 
 Creature.prototype.render = function () {
