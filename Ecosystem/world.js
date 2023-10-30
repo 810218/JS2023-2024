@@ -112,11 +112,16 @@ World.prototype.run = function () {
     this.contextMini.lineWidth = 20;
     this.contextMini.stroke();
 
-    // this.runArray(this.food);
-    // this.creature.run();
-    // this.loadFoodAgain(this.numFood);
-    // world.contextMain.strokeStyle = "rgba(0,0,0)";
-    // world.contextMain.fillStyle = "rgba(0,0,0)";
+    this.contextMini.beginPath(); //draws border mini
+    this.contextMini.moveTo(this.canvasMainLoc.x, this.canvasMainLoc.y);
+    this.contextMini.lineTo(this.canvasMainLoc.x, this.canvasMainLoc.y + this.canvasMain.height);
+    this.contextMini.lineTo(this.canvasMainLoc.x + this.canvasMain.width, this.canvasMainLoc.y + this.canvasMain.height);
+    this.contextMini.lineTo(this.canvasMainLoc.x + this.canvasMain.width, this.canvasMainLoc.y);
+    this.contextMini.closePath();
+    this.contextMini.lineWidth = 20;
+    this.contextMini.stroke();
+
+
     this.contextMini.restore();
 
 }

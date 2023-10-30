@@ -6,12 +6,13 @@ function Food(x, y) {
 
 
 Food.prototype.run = function () {
-    this.render()
+    this.render();
 }
 
 Food.prototype.render = function () {
     world.contextMain.beginPath();
     world.contextMain.arc(this.loc.x, this.loc.y, this.radius, 0, 2 * Math.PI);
+    world.contextMain.closePath();
     world.contextMain.strokeStyle = "rgba(120,0,90,255)";
     world.contextMain.fillStyle = "rgba(68,108,54,1)";
     world.contextMain.fill();
