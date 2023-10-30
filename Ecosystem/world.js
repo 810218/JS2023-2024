@@ -13,13 +13,10 @@ function World() {
         width: 4000,
         height: 3000
     }
-    //create bubbles 
-    // this.bubbles = [];
-    // this.loadBubbles(100, this.contextMain, this.contextMini, this.dims.width, this.dims.height);
-    //make world fit in Mini canvas 
-    this.scaleX = 0.5;
-    this.scaleY = 0.5;
-    //make Main canvas move in world with wasd keys 
+
+    this.scaleX = this.canvasMini.width / this.dims.width;
+    this.scaleY = this.canvasMini.height / this.dims.height;
+
     window.addEventListener("keypress", function (event) {
         switch (event.code) {
             case "KeyW":
@@ -55,8 +52,8 @@ World.prototype.run = function () {
 
     this.contextMain.save();
     this.contextMini.save();
-    this.contextMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
-    this.contextMini.translate(this.contextMain.width, this.contextMain.height);
+    this.contextMain.translate(-this.canvasMainLoc.x, -this.canvasMainLoc.y);
+    this.contextMini.translate(this.canvasMini.width / 2, this.canvasMini.height / 2);
 
     this.contextMain.beginPath(); //draws axis main
     this.contextMain.moveTo(this.dims.left, 0);
@@ -135,8 +132,8 @@ World.prototype.runArray = function (array) {
 World.prototype.loadFoodAgain = function (numFood) {
     if (this.food.length === 0 && start) {
         for (let i = 0; i < numFood; i++) {
-            let x = Math.random() * (this.canvasMain.width - 20) + 10;
-            let y = Math.random() * (this.canvasMain.height - 20) + 10;
+            let x = Math.random() * (this.contextMain.width - 20) + 10;
+            let y = Math.random() * (this.contextMain.height - 20) + 10;
             food.push(new Food(x, y));
         }
     }
