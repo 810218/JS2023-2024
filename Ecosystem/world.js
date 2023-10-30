@@ -138,8 +138,8 @@ World.prototype.runArray = function (array) {
 World.prototype.loadFoodAgain = function (numFood) {
     if (this.food.length === 0 && start) {
         for (let i = 0; i < numFood; i++) {
-            let x = Math.random() * (this.contextMain.width - 20) + 10;
-            let y = Math.random() * (this.contextMain.height - 20) + 10;
+            let x = Math.random() * this.dims.width - this.dims.width / 2;
+            let y = Math.random() * this.dims.height - this.dims.height / 2;
             food.push(new Food(x, y));
         }
     }
