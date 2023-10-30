@@ -16,6 +16,15 @@ Food.prototype.render = function () {
     world.contextMain.fillStyle = "rgba(68,108,54,1)";
     world.contextMain.fill();
     // context.stroke();
+
+
+    world.contextMini.beginPath();
+    world.contextMini.arc(this.loc.x, this.loc.y, this.rad, 0, Math.PI * 2);
+    world.contextMini.closePath();
+    world.contextMini.strokeStyle = this.clr;
+    world.contextMini.fillStyle = this.clr;
+    world.contextMini.fill();
+    world.contextMini.stroke();
 }
 
 

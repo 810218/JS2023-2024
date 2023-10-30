@@ -82,9 +82,9 @@ World.prototype.run = function () {
     // this.contextMini.clearRect(0, 0, this.canvasMini.width, this.canvasMini.height);
     this.contextMini.scale(this.scaleX, this.scaleY);
 
-    this.runArray(this.food);
-    this.creature.run();
-    this.loadFoodAgain(this.numFood);
+    // this.runArray(this.food);
+    // this.creature.run();
+    // this.loadFoodAgain(this.numFood);
 
     this.contextMain.restore();
 
@@ -109,6 +109,12 @@ World.prototype.run = function () {
     this.contextMini.closePath();
     this.contextMini.lineWidth = 20;
     this.contextMini.stroke();
+
+    this.runArray(this.food);
+    this.creature.run();
+    this.loadFoodAgain(this.numFood);
+    world.contextMain.strokeStyle = "rgba(0,0,0)";
+    world.contextMain.fillStyle = "rgba(0,0,0)";
 
     this.contextMini.restore();
     //+++    Draw the main and mini Canvas with bounds and axes
