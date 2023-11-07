@@ -1,5 +1,3 @@
-
-
 function Creature(x, y, foodArray) {
     this.loc = new JSVector(x, y);
     this.vel = new JSVector(0, 0);
@@ -7,7 +5,7 @@ function Creature(x, y, foodArray) {
     this.food = foodArray;
     let foragingMode = "largest";
     let foragingIndex = -1;
-    this.scale = 0;
+    this.scale = 1;
 }
 
 Creature.prototype.run = function () {

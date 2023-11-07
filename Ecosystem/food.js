@@ -16,7 +16,7 @@ Food.prototype.render = function () {
     world.contextMain.strokeStyle = "rgba(120,0,90,255)";
     world.contextMain.fillStyle = "rgba(68,108,54,1)";
     world.contextMain.fill();
-    // context.stroke();
+    //context.stroke();
 
 
     world.contextMini.beginPath();
