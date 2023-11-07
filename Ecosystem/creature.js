@@ -36,13 +36,13 @@ Creature.prototype.render = function () {
     world.contextMain.stroke();
     world.contextMain.restore();
 
-    world.contextMain.beginPath();
-    world.contextMain.arc(this.loc.x, this.loc.y, 50, 0, 2 * Math.PI);
-    world.contextMain.strokeStyle = "rgba(170, 114, 57, 1)";
-    world.contextMain.fillStyle = "rgba(170, 114, 57, 0)";
-    world.contextMain.fill();
-    world.contextMain.stroke();
-    world.contextMain.closePath();
+    world.contextMini.beginPath();
+    world.contextMini.arc(this.loc.x, this.loc.y, 50, 0, 2 * Math.PI);
+    world.contextMini.strokeStyle = "rgba(170, 114, 57, 1)";
+    world.contextMini.fillStyle = "rgba(170, 114, 57, 0)";
+    world.contextMini.fill();
+    world.contextMini.stroke();
+    world.contextMini.closePath();
 
 }
 

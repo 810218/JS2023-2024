@@ -34,11 +34,11 @@ function World() {
                 break;
             case "KeyA":
                 if (world.canvasMainLoc.x + 100 > world.dims.left)
-                    world.canvasMainLoc.x += 20;
+                    world.canvasMainLoc.x -= 20;
                 break;
             case "KeyD":
                 if (world.canvasMainLoc.x + world.canvasMain.width - 100 < world.dims.right)
-                    world.canvasMainLoc.x -= 20;
+                    world.canvasMainLoc.x += 20;
                 break;
         }
     }, false);
@@ -121,7 +121,8 @@ World.prototype.run = function () {
     this.contextMini.lineWidth = 20;
     this.contextMini.stroke();
 
-
+    world.contextMini.strokeStyle = "rgba(0,0,0)";
+    world.contextMini.fillStyle = "rgba(0,0,0)";
     this.contextMini.restore();
 
 }
