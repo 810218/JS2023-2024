@@ -4,12 +4,17 @@ function Snake(x, y, length) {
     this.loc = new JSVector(x, y);
     this.length = length;
     this.segmentVectors = [];
+    this.segmentVelVectors = [];
     this.loadSegmentVectors();
-    this.headVel = new JSVector(0, 1);
-    this.headAcc = new JSVector(-1, 0);
+    let velX = Math.random() * 10 - 5;
+    let velY = Math.random() * 10 - 5;
+    this.headVel = new JSVector(velX, velY);
+    this.headAcc = new JSVector(0, 0);
+    this.updateSegmentVectors();
 }
 
 Snake.prototype.run = function () {
+    this.updateSegmentVectors();
     this.update();
     this.render();
 }
@@ -38,9 +43,21 @@ Snake.prototype.loadSegmentVectors = function () {
 }
 
 Snake.prototype.update = function () {
-    this.headVel.add(this.headAcc);
+    this.acc = JSVector.subGetNew(planet.loc, this.loc);
+    this.acc.normalize();
+    this.acc.multiply(0.4);
+    // this.headVel.add(this.headAcc);
     this.headVel.limit(1);
+    this.headVel.add(this.acc);
+    this.segmentVectors[0].add(this.headVel);
+    for (let i = 1; i < this.length; i++) {
+        this.segmentVectors[i].add(this.segmentVelVectors[i]);
+    }
+}
+
+Snake.prototype.updateSegmentVectors = function () {
     for (let i = 0; i < this.length; i++) {
-        this.segmentVectors[i].add(this.headVel);
+        this.segmentVelVectors[i] = JSVector.subGetNew(this.segmentVectors[0], this.segmentVectors[i]);
+        this.segmentVelVectors[i].normalize();
     }
 }
