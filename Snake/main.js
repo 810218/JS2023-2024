@@ -1,26 +1,28 @@
 
-//+++++++++++++++++++++++++++++++++++++++++++
 window.addEventListener("load", init);
 
-
-
-
-window.onload = init;
 let canvas, context;
-let snake, planet;
+let snakes = [];
 
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
-    planet = new Planet(300, 300);
-    snake = new Snake(200, 200, 10);
+    loadSnakes(3);
     animate();
 }
+
 // every animation cycle
 function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    planet.run();
-    snake.run();
+
+    for (let i = 0; i < snakes.length; i++) {
+        snakes[i].run();
+    }
     requestAnimationFrame(animate);
 }
 
+function loadSnakes(n) {
+    for (let i = 0; i < n; i++) {
+        snakes[i] = new Snake(new JSVector(200, 200), 10);
+    }
+}
