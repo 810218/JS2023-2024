@@ -3,11 +3,12 @@ function Vehicle(loc, vel) {
     this.loc = new JSVector(loc.x, loc.y);
     this.vel = new JSVector(vel.x, vel.y);
     this.acc = new JSVector(0, 0);
-    this.desiredSep = 20;//  desired separation between vehicles
+    this.desiredSep = 50;//  desired separation between vehicles
     this.scl = 3;
     this.clr = "rgba(180,0,220,.8)";
     this.maxSpeed = document.getElementById("slider2").value;  // Get slider VAlue%%%%%%%%%%%%%%%%
     this.maxForce = document.getElementById("slider1").value;  // Get slider VAlue%%%%%%%%%%%%%%%%%
+    this.flockForce = new JSVector(0, 0);
 }
 
 //  placing methods in the prototype 
@@ -20,7 +21,7 @@ Vehicle.prototype.run = function (vehicles) {
 
 Vehicle.prototype.flock = function (vehicles) {
     //  flock force is the accumulation of all forces
-    let flockForce = new JSVector(0, 0);
+    this.lockForce = new JSVector(0, 0);
     // set up force vectors to be added to acc
     let sep = this.separate(vehicles);
     let ali = this.align(vehicles);
@@ -30,14 +31,14 @@ Vehicle.prototype.flock = function (vehicles) {
     let aliMult = document.getElementById("slider4").value;;  // Get slider VAlue%%%%%%%%%%%%%%%%%%
     let cohMult = document.getElementById("slider5").value;;    // Get slider VAlue%%%%%%%%%%%%%%%%%%
     //  calculate three forces
-    sep.multiply(sepMult);
+    sep.multiply(5000 * sepMult);
     ali.multiply(aliMult);
-    coh.multiply(cohMult);
+    coh.multiply(500 * cohMult);
     //  add each of these to flockForce
-    flockForce.add(sep);
-    flockForce.add(ali);
-    flockForce.add(coh);
-    this.acc.add(flockForce);
+    this.flockForce.add(sep);
+    // this.flockForce.add(ali);
+    // this.flockForce.add(coh);
+    this.acc.add(this.flockForce);
 }
 //+++++++++++++++++++++++++++++++++  Flocking functions
 Vehicle.prototype.separate = function (v) {
@@ -60,8 +61,20 @@ Vehicle.prototype.separate = function (v) {
 }
 
 Vehicle.prototype.align = function (v) {
-    let steer = new JSVector(0, 0);
-    return steer;
+    let sum = new JSVector(0, 0);
+    let count = 0;
+    for (let i = 0; i < v.length; i++) {
+        let distance = this.loc.distance(v[i].loc);
+        if (distance > 0) {
+            sum.add(v[i].vel);
+            count++;
+        }
+    }
+    if (count > 0) {
+        sum.divide(count);
+        sum.normalize();
+    }
+    return sum;
 }
 
 Vehicle.prototype.cohesion = function (v) {
@@ -69,7 +82,7 @@ Vehicle.prototype.cohesion = function (v) {
     let count = 0;
     for (let i = 0; i < v.length; i++) {
         let distance = this.loc.distance(v[i].loc);
-        if (distance > 20) {
+        if (distance > 0) {
             oppVector = JSVector.subGetNew(v[i].loc, this.loc);
             oppVector.normalize();
             oppVector.divide(distance);
