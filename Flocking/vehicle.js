@@ -21,7 +21,7 @@ Vehicle.prototype.run = function (vehicles) {
 
 Vehicle.prototype.flock = function (vehicles) {
     //  flock force is the accumulation of all forces
-    this.lockForce = new JSVector(0, 0);
+    this.flockForce = new JSVector(0, 0);
     // set up force vectors to be added to acc
     let sep = this.separate(vehicles);
     let ali = this.align(vehicles);
@@ -31,19 +31,20 @@ Vehicle.prototype.flock = function (vehicles) {
     let aliMult = document.getElementById("slider4").value;;  // Get slider VAlue%%%%%%%%%%%%%%%%%%
     let cohMult = document.getElementById("slider5").value;;    // Get slider VAlue%%%%%%%%%%%%%%%%%%
     //  calculate three forces
-    sep.multiply(5000 * sepMult);
+    sep.multiply(sepMult);
     ali.multiply(aliMult);
-    coh.multiply(500 * cohMult);
+    coh.multiply(cohMult);
     //  add each of these to flockForce
     this.flockForce.add(sep);
-    // this.flockForce.add(ali);
-    // this.flockForce.add(coh);
+    this.flockForce.add(ali);
+    this.flockForce.add(coh);
     this.acc.add(this.flockForce);
 }
 //+++++++++++++++++++++++++++++++++  Flocking functions
 Vehicle.prototype.separate = function (v) {
     let escapeVector = new JSVector(0, 0);
     let count = 0;
+    let steer = new JSVector();
     for (let i = 0; i < v.length; i++) {
         let distance = this.loc.distance(v[i].loc);
         if (distance > 0 && distance < this.desiredSep) {
@@ -56,8 +57,12 @@ Vehicle.prototype.separate = function (v) {
     }
     if (count > 0) {
         escapeVector.divide(count);
+        escapeVector.normalize();
+        escapeVector.multiply(this.maxSpeed);
+        steer = JSVector.subGetNew(escapeVector, this.vel);
+        steer.limit(this.maxForce);
     }
-    return escapeVector;
+    return steer;
 }
 
 Vehicle.prototype.align = function (v) {
@@ -65,7 +70,7 @@ Vehicle.prototype.align = function (v) {
     let count = 0;
     for (let i = 0; i < v.length; i++) {
         let distance = this.loc.distance(v[i].loc);
-        if (distance > 0) {
+        if (distance > 0 && distance < 50) {
             sum.add(v[i].vel);
             count++;
         }
@@ -80,10 +85,11 @@ Vehicle.prototype.align = function (v) {
 Vehicle.prototype.cohesion = function (v) {
     let seekVector = new JSVector(0, 0);
     let count = 0;
+    let steer = new JSVector();
     for (let i = 0; i < v.length; i++) {
         let distance = this.loc.distance(v[i].loc);
-        if (distance > 0) {
-            oppVector = JSVector.subGetNew(v[i].loc, this.loc);
+        if (distance > 0 && distance < 50) {
+            let oppVector = JSVector.subGetNew(v[i].loc, this.loc);
             oppVector.normalize();
             oppVector.divide(distance);
             seekVector.add(oppVector);
@@ -92,8 +98,12 @@ Vehicle.prototype.cohesion = function (v) {
     }
     if (count > 0) {
         seekVector.divide(count);
+        seekVector.normalize();
+        seekVector.multiply(this.maxSpeed);
+        steer = JSVector.subGetNew(seekVector, this.vel);
+        steer.limit(this.maxForce);
     }
-    return seekVector;
+    return steer;
 }
 
 Vehicle.prototype.seek = function (target) {
